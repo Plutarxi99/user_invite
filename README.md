@@ -75,6 +75,9 @@
 
 * Заполнить файл .env и приложение готово к запуску;
 
+* Для запуска в PyCharme использовал такие настройки запуска:
+![Screenshot from 2024-03-25 15-13-13](https://github.com/Plutarxi99/user_invite/assets/132927381/c3894bbb-38e6-4c2f-93ca-995e59c8c8ed)
+
 </details>
 
 <details>
@@ -83,15 +86,12 @@
 Функционал:
 
 * Создать приложение по ссылке и создать приложение <<Почта>> и получить пароль:
-  <pre><code>https://id.yandex.ru/security/app-passwords</code></pre>
+  https://id.yandex.ru/security/app-passwords
 ![Screenshot from 2024-03-25 15-08-40](https://github.com/Plutarxi99/user_invite/assets/132927381/330bf584-9920-40a5-8324-5429f2d8ddc4)
 
-* Скопировать пароль в .env файл оставльные настройка уже готовы:
+* Скопировать пароль в .env файл оставльные настройка уже готовы.
 
 </details>
-
-<details>
-
 
 <details>
 
