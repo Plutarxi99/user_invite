@@ -9,11 +9,9 @@
 * Пользователь логиниться на сервисе и ему высылается на почту bearer token
 * Через эндпоинт он устанавливает к себе в cookie браузера bearer token
 * Работа с бд PostgreSQL
-* Создавать пользователя может только админ
-* К сервису к кадому эндпоинту написаны тесты
-* Подключена докуменация и swagger для работы через браузер.
-* Пользователь может получиться информация о себе, может ее изменять информация о себе и выводить список пользователей
-* Админ может создавать, изменять, удалять и получаться постраничный список пользователей
+* Подключена докуменация и swagger для работы через браузер.  <pre><code>http://127.0.0.1:8000/docs#/</code></pre>
+* Пользователь может получить действующий или создать новый реферальный код. Удалить его. Получить своих рефераллов или по id или email получить рефералов подписанных на указанных.
+* Изменить о себе информацию
 </details>
 
 > [!IMPORTANT]
@@ -32,8 +30,16 @@
 |     **SUPERUSER_EMAIL**| email_superuser       |     установить почту суперюзера|
 |     **SUPERUSER_PASSWORD**| password_superuser       |     установить пароль суперюзера|
 |     **COOKIE_NAME**| bearer       |     название ключа cookie, который присвается пользователю при вхождение на сервис|
+|     **MAIL_USERNAME**| fastapi_referal       |     названия твоего почтового сервиса|
+|     **MAIL_PASSWORD**| qweq223e123edqwr       |     пароль полученный в настройках приложения для почтового сервиса P.S. Далее идет инструкция в картинках|
+|     **MAIL_PORT**| 465       |     почтовый порт|
+|     **MAIL_FROM**| <Твой почтовый адрес>       |     от кого придет почта|
+|     **MAIL_SERVER**| <pre><code>smtp.yandex.ru</code></pre>      |      почтовый сервер, в моем случае это яндекс|
 |     **EMAIL_TEST_USER**| test@test.ru       |     установить email для тестового пользоватлея|
 |     **PASSWORD_TEST_USER**| test       |     установить пароль для тестового пользователя|
+|     **CLEARBIT_API_SECRET**| sk_8caa...83d58c       |     ключи API сервиса clearbit https://dashboard.clearbit.com/api|
+|     **CLEARBIT_API_PUBLIC**| pk_8caa...83d58c        |     ключи API сервиса clearbit https://dashboard.clearbit.com/api|
+|     **REDIS_SERVER**| redis://localhost       |     подключение к бд редис, если это в докере, то он строится иначе и уже прописан|
 
 </details>
 
@@ -44,7 +50,7 @@
 * Переходим в папку где будет лежать код
 
 * Копируем код с git:
-  <pre><code>git clone git@github.com:Plutarxi99/storage_user.git</code></pre>
+  <pre><code>git clone git@github.com:Plutarxi99/user_invite.git</code></pre>
 
 * Создаем виртуальное окружение:
   <pre><code>python3 -m venv env</code></pre>
@@ -56,30 +62,47 @@
 * Создать секретный ключ:
   <pre><code>openssl rand -hex 32</code></pre>
 
-* Удалить все миграции  storage_user/backend/migrations/versions;
+* Вставить его в .env
+
+* Удалить все миграции  user_invite/backend/migrations/versions;
+
+* Создать свою первую миграцию:
+    <pre><code>alembic revision --autogenerate -m "name_migration"</code></pre>
 
 * Создать базу данных:
   <pre><code>psql -U postgres</code></pre>
-  <pre><code>create database storage_user;</code></pre>
+  <pre><code>create database user_invite;</code></pre>
 
 * Заполнить файл .env и приложение готово к запуску;
 
-* Создать первого пользователя в сервеси. Перейти в файл и исполнить его
-  <pre><code>python3 backend/src/backend_pre_start.py </code></pre>
+</details>
 
+<details>
+
+<summary>Как получить пароль почтового сервиса?</summary>
+Функционал:
+
+* Создать приложение по ссылке и создать приложение <<Почта>> и получить пароль:
+  <pre><code>https://id.yandex.ru/security/app-passwords</code></pre>
+![Screenshot from 2024-03-25 15-08-40](https://github.com/Plutarxi99/user_invite/assets/132927381/330bf584-9920-40a5-8324-5429f2d8ddc4)
+
+* Скопировать пароль в .env файл оставльные настройка уже готовы:
 
 </details>
+
+<details>
+
 
 <details>
 
 <summary>Что использовалось в приложение?</summary>
 Функционал:
 
-* Подключено fastapi_filter для пагинации
 * Подключено jwt для авторизации пользователя Bearer token
 * Подключено PostgreSQL
-* Обложил тестами все эндпоинты сервиса
 * Добавил миграции с помощью alembic
+* Добавил redis для кэширования реферального кода
+* API интеграция https://app.clearbit.com для поулчения компании почтового адреса
 * Добавил инструкции для создания docker-compose
 </details>
 
@@ -91,9 +114,9 @@
 * Выполняем код:
   <pre><code>docker-compose build</code></pre>
   <pre><code>docker-compose up</code></pre>
-  
-* Для создания первого пользователя и начать пользоваться сервисом:
-  <pre><code>docker exec app python3 backend/src/backend_pre_start.py</code></pre>
+
+* Подключаемся к контейнеру:
+  <pre><code>http://127.0.0.1:8008/docs#/</code></pre>
 </details>
 
 
