@@ -1,0 +1,159 @@
+{
+  'person': None,
+  'company': {
+    'id': '924dca28-af62-4c75-9521-7e5be09bee0a',
+    'name': 'Mail.Ru Group',
+    'legalName': 'VK LLC',
+    'domain': 'mail.ru',
+    'domainAliases': [
+      'payservice.io',
+      'playerone.ru',
+      'hi-chief.ru',
+      'wowsale.ru',
+      '2health.ru',
+      'hi-chef.ru',
+      'mail.ru.com',
+      'imgsmail.ru',
+      'hichief.ru',
+      'openmailformat.org',
+      'xmail.ru',
+      'internet.ru',
+      'gibdd.io',
+      'base.ru',
+      'attachmail.ru',
+      'inbox.ru',
+      'bk.ru'
+    ],
+    'site': {
+      'phoneNumbers': [],
+      'emailAddresses': []
+    },
+    'category': {
+      'sector': 'Information Technology',
+      'industryGroup': 'Software & Services',
+      'industry': 'IT Services',
+      'subIndustry': 'Data Processing & Outsourced Services',
+      'gicsCode': '45102030',
+      'sicCode': '73',
+      'sic4Codes': [
+        '7389',
+        '8999'
+      ],
+      'naicsCode': '51',
+      'naics6Codes': [
+        '518210',
+        '519130'
+      ],
+      'naics6Codes2022': [
+        '518210',
+        '513110',
+        '513120',
+        '513130',
+        '513199'
+      ]
+    },
+    'tags': [
+      'Information Technology & Services',
+      'Computing Infrastructure',
+      'Data & Analytics',
+      'Hosting Services',
+      'Information',
+      'Computers',
+      'E-commerce',
+      'Publishers',
+      'Broadcasting',
+      'Publishing',
+      'Internet',
+      'Web Search',
+      'Web & Client Portals',
+      'Technology',
+      'Networking',
+      'B2B',
+      'SAAS',
+      'B2C',
+      'ISP'
+    ],
+    'description': 'Mail.Ru Group is a diverse internet company offering social networking, email, online games, and business tools, with a focus on communication, entertainment, and education.',
+    'foundedYear': None,
+    'location': 'Moscow, Russia, 125167',
+    'timeZone': 'Europe/Moscow',
+    'utcOffset': 3,
+    'geo': {
+      'streetNumber': None,
+      'streetName': None,
+      'subPremise': None,
+      'streetAddress': None,
+      'city': 'Moscow',
+      'postalCode': '125167',
+      'state': None,
+      'stateCode': None,
+      'country': 'Russia',
+      'countryCode': 'RU',
+      'lat': 55.7975882,
+      'lng': 37.5441116
+    },
+    'logo': 'https://logo.clearbit.com/mail.ru',
+    'facebook': {
+      'handle': None,
+      'likes': None
+    },
+    'linkedin': {
+      'handle': 'company/mail-ru'
+    },
+    'twitter': {
+      'handle': 'MailRu',
+      'id': '1479746407363919879',
+      'bio': '',
+      'followers': 31,
+      'following': 1,
+      'location': '',
+      'site': None,
+      'avatar': 'https://pbs.twimg.com/profile_images/1479746581842874370/0aNLj_yr_normal.jpg'
+    },
+    'crunchbase': {
+      'handle': 'organization/mail-ru'
+    },
+    'emailProvider': False,
+    'type': 'public',
+    'ticker': '61HE',
+    'identifiers': {
+      'usEIN': None,
+      'usCIK': None
+    },
+    'phone': '+7 495 725-63-57',
+    'metrics': {
+      'alexaUsRank': None,
+      'alexaGlobalRank': 39,
+      'trafficRank': 'very_high',
+      'employees': 2000,
+      'employeesRange': '1K-5K',
+      'marketCap': 4010000000,
+      'raised': None,
+      'annualRevenue': None,
+      'estimatedAnnualRevenue': None,
+      'fiscalYearEnd': None
+    },
+    'indexedAt': '2024-03-13T15:51:42.853Z',
+    'tech': [
+      'android',
+      'digital_ocean',
+      'ios',
+      'nginx',
+      'google_tag_manager',
+      'tealium'
+    ],
+    'techCategories': [
+      'operating_system',
+      'cloud_computing_services',
+      'programming_framework',
+      'web_servers',
+      'tag_management'
+    ],
+    'parent': {
+      'domain': None
+    },
+    'ultimateParent': {
+      'domain': None
+    }
+  }
+}
