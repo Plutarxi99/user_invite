@@ -40,58 +40,48 @@ async def login_user(
     :return: возвращает существующего пользователя
     """
     # для получения существующего пользователя
-    user_in = await authenticate_user(email=user.login, password=user.password, db=db)
+    user_in = await authenticate_user(
+        email=user.login,
+        password=user.password,
+        db=db
+    )
     # проверка есть ли пользователь
     if not user_in:
-        raise ErrorResponseModel(code=401, message="Такого пользователя не существует в системе")
+        raise ErrorResponseModel(
+            code=401,
+            message="Такого пользователя не существует в системе"
+        )
     # установка времени протухания токена, создание и присваивания токена
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = await create_access_token(
-        data={"sub": user.login}, expires_delta=access_token_expires
+    access_token_expires = timedelta(
+        minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
-
-    send_obj_mail = EmailBody(pk=user_in.id, to=user_in.email, subject="токен для использование системы",
-                              message=TokenAcceptEmail(access_token=access_token, token_type=settings.COOKIE_NAME,
-                                                       pk=user_in.id).model_dump_json())
+    access_token = await create_access_token(
+        data={"sub": user.login},
+        expires_delta=access_token_expires
+    )
+    # отправка письма с bearer token и делаем объект для вложения в функцию
+    send_obj_mail = EmailBody(pk=user_in.id,
+                              to=user_in.email,
+                              subject="токен для использование системы",
+                              message=TokenAcceptEmail(
+                                  access_token=access_token,
+                                  token_type=settings.COOKIE_NAME,
+                                  pk=user_in.id
+                              ).model_dump_json()
+                              )
 
     status_send_mail = await send_mail(send_obj_mail)
+    # Если без отправки письма, то раскоммитить след строки
+    # а другой return закоммитить
+    #     plug_without_send_mail = {
+    #         "access_token": access_token,
+    #         "token_type": "bearer",
+    #         "pk": user_in.id}
+    #     return {"answer": plug_without_send_mail}
     if status_send_mail:
         return {"answer": "Письмо отправлено на почту для вхождения в систему"}
     else:
-        return {"answer": "False"}
-# @router_auth.post(
-#     "/login",
-#     summary="Вход в систему",
-#     # response_model=UserInfo,
-#     # response_model_exclude_none=True
-# )
-# async def login_user_after_del(
-#         response: Response,
-#         user: LoginModel,
-#         db: Session = Depends(get_db),
-# ):
-#     """
-#     Эндпоинт для входа существующего пользователя
-#     :param response: для установки токена для использования сервиса
-#     :param user: схема для входa пользователя
-#     :param db: получение подключения к сессии базе данных
-#     :return: возвращает существующего пользователя
-#     """
-#     # для получения существующего пользователя
-#     user_in = await authenticate_user(email=user.login, password=user.password, db=db)
-#     # проверка есть ли пользователь
-#     if not user_in:
-#         raise ErrorResponseModel(code=401, message="Такого пользователя не существует в системе")
-#     # установка времени протухания токена, создание и присваивания токена
-#     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-#     access_token = await create_access_token(
-#         data={"sub": user.login}, expires_delta=access_token_expires
-#     )
-#     awergergaerg = {
-#         "access_token": access_token,
-#         "token_type": "bearer",
-#         "pk": user_in.id}
-#     return {"answer": awergergaerg}
+        return {"answer":"Письмо не отправлено или произошла ошибка на сервере"}
 
 
 @router_auth.post(
@@ -103,32 +93,28 @@ async def accept_email_register(
         bearer_token: TokenAcceptEmail,
         db: Session = Depends(get_db)
 ):
+    """
+    Установка на браузер пользователя
+    Cookie bearer token для использования сервисом
+    :param response:
+    :param bearer_token:
+    :param db:
+    :return:
+    """
     current_user_not_active = await get_user_on_id(user_id=bearer_token.pk, db=db)
-    user_is_active = UserIsActiveModel(email=current_user_not_active.email, is_active=True)
+    user_is_active = UserIsActiveModel(
+        email=current_user_not_active.email,
+        is_active=True
+    )
+    # обновление в базе данных, что пользователь активен
     user = CRUDBase(model=User)
     user.update(db=db, obj_in=user_is_active, db_obj=current_user_not_active)
-    response.set_cookie(key=bearer_token.token_type, value=f"{bearer_token.access_token}")
+    # установка в cookie bearer token
+    response.set_cookie(key=bearer_token.token_type,
+                        value=f"{bearer_token.access_token}"
+                        )
 
     return {"message": "Установлен токен для использования сервисом"}
-
-
-# @router_auth.get(
-#     "/accept_email/{pk}/{bearer_token}",
-#     include_in_schema=False,
-#     response_class=RedirectResponse
-# )
-# async def redirect_fastapi(
-#         pk: int,
-#         response: Response,
-#         bearer_token: str,
-#         db: Session = Depends(get_db)
-# ):
-#     current_user_not_active = await get_user_on_id(user_id=pk, db=db)
-#     user_is_active = UserIsActiveModel(email=current_user_not_active.email, is_active=True)
-#     user = CRUDBase(model=User)
-#     user.update(db=db, obj_in=user_is_active, db_obj=current_user_not_active)
-#     response.set_cookie(key='bearer', value=bearer_token)
-#     return settings.REDIRECT_SWAGGER
 
 
 @router_auth.get(
@@ -146,24 +132,3 @@ async def logout_user(
     # удаление токена
     response.delete_cookie(key=settings.COOKIE_NAME)
     return {"Выход": "Вы уже вышли из системы"}
-# @router_auth.get(
-#     "/accept_email/{pk}/{bearer_token}",
-#     # include_in_schema=False
-# )
-# async def accept_email_register(
-#         response: Response,
-#         pk: int,
-#         bearer_token: str,
-#         db: Session = Depends(get_db)
-# ):
-#     current_user_not_active = await get_user_on_id(user_id=pk, db=db)
-#     user_is_active = UserIsActiveModel(email=current_user_not_active.email, is_active=True)
-#     user = CRUDBase(model=User)
-#     update_user = user.update(db=db, obj_in=user_is_active, db_obj=current_user_not_active)
-#     # access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-#     # access_token = await create_access_token(
-#     #     data={"sub": user_is_active.email}, expires_delta=access_token_expires
-#     # )
-#     response.set_cookie(key="bearer", value=f"{bearer_token}")
-#     # user_u = await get_user(db=db, email=current_user_not_active.email)
-#     return {"qwe": update_user}

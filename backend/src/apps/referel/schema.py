@@ -13,5 +13,3 @@ class RefCodSearch(BaseModel):
 
 class RefererCod(BaseModel):
     referer_cod: str | None = None
-
-

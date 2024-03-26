@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, Depends
 from sqlalchemy.orm import Session
 from typing import Annotated
-from backend.src.apps.user.schemas import UserInfoReferal, UserSchema, UserUpdate
+from backend.src.apps.user.schemas import UserSchema, UserUpdate
 from backend.src.base.crud import CRUDBase
 from backend.src.exceptions.model import ErrorResponseModel
 from backend.src.models import User
@@ -28,5 +28,9 @@ async def change_data_user(
             current_user.last_name == update_user_data.last_name:
         raise ErrorResponseModel(code=401, message="Вы не изменили поля")
     user = CRUDBase(model=User)
-    user_update = user.update(db=db, obj_in=update_user_data, db_obj=current_user)
+    user_update = user.update(
+        db=db,
+        obj_in=update_user_data,
+        db_obj=current_user
+    )
     return user_update

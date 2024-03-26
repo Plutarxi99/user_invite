@@ -26,7 +26,11 @@ class Settings:
     POSTGRES_DRIVER: str = os.getenv("POSTGRES_DRIVER")
 
     # ссылка для подключения к базe данных
-    SQLALCHEMY_DATABASE_URI: str = f"{POSTGRES_DRIVER}://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}/{POSTGRES_DB}"
+    SQLALCHEMY_DATABASE_URI: str = (f"{POSTGRES_DRIVER}://"
+                                    f"{POSTGRES_USER}:"
+                                    f"{POSTGRES_PASSWORD}@"
+                                    f"{POSTGRES_SERVER}/"
+                                    f"{POSTGRES_DB}")
 
     MAIL_USERNAME: str = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD: str = os.getenv("MAIL_PASSWORD")
@@ -34,17 +38,10 @@ class Settings:
     MAIL_FROM: str = os.getenv("MAIL_FROM")
     MAIL_SERVER: str = os.getenv("MAIL_SERVER")
 
-    DOMEN: str = os.getenv("DOMEN")
-    MAIL_ACCEPT_URL: str = os.getenv("MAIL_ACCEPT_URL")
-    URL_FOR_ACTIVATE_USER: str = f"{DOMEN}{MAIL_ACCEPT_URL}"
-    SWAGGER_PATH: str = os.getenv("SWAGGER_PATH")
-    REDIRECT_SWAGGER: str = f"{DOMEN}{SWAGGER_PATH}"
-
     CLEARBIT_API_SECRET: str = os.getenv("CLEARBIT_API_SECRET")
     CLEARBIT_API_PUBLIC: str = os.getenv("CLEARBIT_API_PUBLIC")
 
-    HUBSPOT_APP_ID: str = os.getenv("HUBSPOT_APP_ID")
-    HUBSPOT_CLIENT_ID: str = os.getenv("HUBSPOT_CLIENT_ID")
-    HUBSPOT_CLIENT_SECRET: str = os.getenv("HUBSPOT_CLIENT_SECRET")
+    REDIS_SERVER: str = os.getenv("REDIS_SERVER")
+
 
 settings = Settings()

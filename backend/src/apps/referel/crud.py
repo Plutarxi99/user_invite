@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from backend.src.apps.user.schemas import UserInfoReferal
 from backend.src.base.crud import write_modeldb_in_modelschema
-from backend.src.models import User, ReferalProgram
+from backend.src.models import ReferalProgram
 
 
 async def get_referal_on_id(
@@ -9,7 +9,8 @@ async def get_referal_on_id(
         user_referer_id: int
 ) -> list:
     """
-    Получение списка рефералов, которые использовали реферальный код для регистрации
+    Получение списка рефералов,
+    которые использовали реферальный код для регистрации
     :param db: получение сессии бд
     :param user_referer_id: id реферера полученного из реферального кода
     :return: список из рефералов подписанного на реферера

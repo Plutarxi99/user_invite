@@ -7,7 +7,11 @@ from backend.src.apps.referel.endpoints import router_referal
 
 # соединения эндпоинтов для включения их в сервис
 api_router = APIRouter()
-api_router.include_router(router_auth, tags=['auth'])
-api_router.include_router(router_user, prefix="/users", tags=["users"])
-api_router.include_router(router_register, prefix="/register", tags=['register'])
-api_router.include_router(router_referal, prefix="/referal", tags=['referal'])
+api_router.include_router(router_auth,
+                          tags=['auth'])
+api_router.include_router(router_user, prefix="/users",
+                          tags=["users"])
+api_router.include_router(router_register, prefix="/register",
+                          tags=['register'])
+api_router.include_router(router_referal, prefix="/referal",
+                          tags=['referal'])

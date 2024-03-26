@@ -1,4 +1,4 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
+from typing import Any, Dict, Generic, Optional, Type, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -14,7 +14,8 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: Type[ModelType]):
         """
-        CRUD object with default methods to Create, Read, Update, Delete (CRUD).
+        CRUD object with default methods
+        to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
 
@@ -66,7 +67,8 @@ async def write_modeldb_in_modelschema(
         model_schema: BaseModel
 ):
     """
-    Получение из полученной модели значение и сопоставление полей, которые мы хотим заполнить
+    Получение из полученной модели значение и сопоставление полей,
+    которые мы хотим заполнить
     :param obj_db: объект из базы данных
     :param model_schema: модель-схема ,которую мы хотим заполнить
     :return: словарь с данными, которые соответствуют указанной модели-схеме

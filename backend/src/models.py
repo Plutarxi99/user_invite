@@ -30,4 +30,3 @@ class ReferalProgram(Base):
 
     referal_id = Column(Integer, ForeignKey("users.id"), unique=True)
     referal = relationship("User", back_populates="referal_user")
-
