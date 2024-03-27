@@ -6,4 +6,3 @@ class EmailBody(BaseModel):
     to: EmailStr
     subject: str
     message: str
-

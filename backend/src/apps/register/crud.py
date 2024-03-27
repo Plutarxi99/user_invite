@@ -1,10 +1,8 @@
-from typing import Annotated
-
 from sqlalchemy.orm import Session
 
 from backend.src.apps.register.schemas import ReferalProgramModel
 from backend.src.apps.user.crud import get_user_on_referer_cod
-from backend.src.apps.user.schemas import UserIsActiveModel, UserCreate, UserSchema
+from backend.src.apps.user.schemas import UserCreate
 from backend.src.base.crud import CRUDBase
 from backend.src.core.security import get_password_hash
 from backend.src.models import User, ReferalProgram
@@ -44,7 +42,10 @@ async def add_in_referal_program(
     :return:
     """
     referer_user = await get_user_on_referer_cod(db=db, referer_cod=referer_cod)
-    ref_pro_add = ReferalProgramModel(referal_id=user_referal_id, referer_user=referer_user.id)
+    ref_pro_add = ReferalProgramModel(
+        referal_id=user_referal_id,
+        referer_user=referer_user.id
+    )
     ref_pro = CRUDBase(ReferalProgram)
     new_referal = ref_pro.create(db=db, obj_in=ref_pro_add)
     return new_referal

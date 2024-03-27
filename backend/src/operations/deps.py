@@ -1,22 +1,23 @@
 from typing import Annotated
 from datetime import datetime
 from fastapi import Depends, HTTPException, Request
-from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from starlette import status
 
 from backend.src.apps.auth.schemas import TokenData
-from backend.src.apps.referel.schema import MyRefCod, RefCodSearch
+from backend.src.apps.referel.schema import RefCodSearch
 from backend.src.apps.user.crud import get_user
 from backend.src.apps.user.schemas import UserSchema
 from backend.src.core.config import settings
-from backend.src.core.security import verify_password, OAuth2PasswordBearerWithCookie
+from backend.src.core.security import (verify_password,
+                                       OAuth2PasswordBearerWithCookie)
 from backend.src.exceptions.model import ErrorResponseModel
 from backend.src.models import User
 import base64
 import pickle
 import pytz
+
 oauth2_scheme = OAuth2PasswordBearerWithCookie()
 
 
@@ -28,7 +29,10 @@ async def get_db(request: Request):
     return request.state.db
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
+async def get_current_user(
+        token: Annotated[str, Depends(oauth2_scheme)],
+        db: Session = Depends(get_db)
+):
     """
     Функция для чтения полученного токена и возвращение ошибки
     :param token: bearer token пользователя
@@ -41,7 +45,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY,
+                             algorithms=[settings.ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
@@ -62,19 +67,6 @@ async def get_current_active_user(
     return current_user
 
 
-# async def get_current_user_by_bearer(
-#         current_user: Annotated[UserSchema, Depends(get_current_user)]
-# ):
-#     """
-#     Проверка пользователя является ли он админом сервиса
-#     :param current_user: пользователь, который делает запрос
-#     :return: пользователя, иначе ошибка
-#     """
-#     if not current_user:
-#         raise ErrorResponseModel(code=403, message="Вы не являетесь пользователем сервиса")
-#     return current_user
-
-
 async def get_current_admin_user(
         current_user: Annotated[UserSchema, Depends(get_current_user)]
 ):
@@ -84,13 +76,16 @@ async def get_current_admin_user(
     :return: пользователя, иначе ошибка
     """
     if not current_user.is_admin:
-        raise ErrorResponseModel(code=403, message="Вы не являетесь админом сервиса")
+        raise ErrorResponseModel(code=403,
+                                 message="Вы не являетесь админом сервиса"
+                                 )
     return current_user
 
 
 async def authenticate_user(db: Session, email: str, password: str):
     """
-    Проверка вхождения пользователя. Проверка пароля и сущетсвет ли такой пользователя
+    Проверка вхождения пользователя.
+    Проверка пароля и сущетсвет ли такой пользователя
     :param db: подключение к базе данных
     :param email: email вводимым пользователем
     :param password: пароль вводимым пользователем
@@ -137,7 +132,10 @@ async def decode_referer_cod(
     dict_encode_ref_cod = await request.json()
     encode_ref_cod = dict_encode_ref_cod['referer_cod']
     if encode_ref_cod == 'null':
-        raise ErrorResponseModel(code=403, message="Реферальный код не верный или такого не существует")
+        raise ErrorResponseModel(code=403,
+                                 message="Реферальный код не "
+                                         "верный или такого не существует"
+                                 )
     decode_ref_cod = pickle.loads(base64.b64decode(encode_ref_cod))
     return decode_ref_cod
 

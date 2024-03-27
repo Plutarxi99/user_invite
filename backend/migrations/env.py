@@ -1,3 +1,6 @@
+import sys
+from os.path import abspath, dirname
+
 import os
 from logging.config import fileConfig
 
@@ -7,9 +10,6 @@ from sqlalchemy import pool
 from alembic import context
 
 # добавил для нахождения папки backend, интерпретатор не мог найти модуль
-import sys
-from os.path import abspath, dirname
-
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from backend.src.models import Base
 

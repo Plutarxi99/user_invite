@@ -10,7 +10,8 @@ async def send_mail(
     try:
         msg = MIMEText(body.message, "html")
         msg['Subject'] = body.subject
-        msg['From'] = f'Accept active user or get bearer <{settings.MAIL_FROM}>'
+        msg['From'] = (f'Accept active user or get bearer '
+                       f'<{settings.MAIL_FROM}>')
         msg['To'] = body.to
         port = int(settings.MAIL_PORT)
         server = SMTP_SSL(settings.MAIL_SERVER, port)
