@@ -78,6 +78,18 @@
 * Для запуска в PyCharme использовал такие настройки запуска:
 ![Screenshot from 2024-03-25 15-13-13](https://github.com/Plutarxi99/user_invite/assets/132927381/c3894bbb-38e6-4c2f-93ca-995e59c8c8ed)
 
+* Вам надо зарегистроваться и авторизоваться по эндпоинту:
+![Screenshot from 2024-03-27 13-25-10](https://github.com/Plutarxi99/user_invite/assets/132927381/5dec5988-517f-4161-bdf2-39969ec8d486)
+
+* После регистрации по эндпоинта вам на почту придет письмо с таким содержанием:
+![Screenshot from 2024-03-27 13-22-51](https://github.com/Plutarxi99/user_invite/assets/132927381/12193474-9255-4743-a670-a06a3d8279c8)
+
+* Содержимое надо скопировать и вставить в эндпоинт:
+![Screenshot from 2024-03-27 13-25-56](https://github.com/Plutarxi99/user_invite/assets/132927381/b14dcfec-46c3-4b40-a347-67c36ef10213)
+
+* Протустировать достаточно использовать команду:
+  <pre><code>pytest</code></pre>
+
 </details>
 
 <details>
@@ -104,6 +116,7 @@
 * Добавил redis для кэширования реферального кода
 * API интеграция https://app.clearbit.com для поулчения компании почтового адреса
 * Добавил инструкции для создания docker-compose
+* Добавил модуль тестрования основных эндпоинтов с созданием временной и тестовой базы данных на основе Pytest
 </details>
 
 <details>
